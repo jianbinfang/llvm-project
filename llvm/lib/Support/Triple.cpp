@@ -44,6 +44,8 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
   case lanai:          return "lanai";
   case le32:           return "le32";
   case le64:           return "le64";
+  case matrix:         return "matrix";
+  case matrixel:       return "matrixel";
   case mips64:         return "mips64";
   case mips64el:       return "mips64el";
   case mips:           return "mips";
@@ -104,6 +106,9 @@ StringRef Triple::getArchTypePrefix(ArchType Kind) {
   case ppc64le:
   case ppc:
   case ppcle:       return "ppc";
+
+  case matrix:
+  case matrixel:       return "matrix";
 
   case mips:
   case mipsel:
@@ -281,6 +286,8 @@ Triple::ArchType Triple::getArchTypeForLLVMName(StringRef Name) {
     .Case("armeb", armeb)
     .Case("avr", avr)
     .StartsWith("bpf", BPFArch)
+    .Case("matrix", matrix)
+    .Case("matrixel", matrixel)
     .Case("mips", mips)
     .Case("mipsel", mipsel)
     .Case("mips64", mips64)
@@ -419,6 +426,10 @@ static Triple::ArchType parseArch(StringRef ArchName) {
     .Case("thumb", Triple::thumb)
     .Case("thumbeb", Triple::thumbeb)
     .Case("avr", Triple::avr)
+    //.Case("matrix", "matrixeb", "matrixallegrex", Triple::matrix)
+    //.Case("matrixel", "matrixallegrexel", Triple::matrixel)
+    .Case("matrix", Triple::matrix)
+    .Case("matrixel", Triple::matrixel)
     .Case("msp430", Triple::msp430)
     .Cases("mips", "mipseb", "mipsallegrex", "mipsisa32r6",
            "mipsr6", Triple::mips)
@@ -703,6 +714,8 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::lanai:
   case Triple::le32:
   case Triple::le64:
+  case Triple::matrix:
+  case Triple::matrixel:
   case Triple::mips64:
   case Triple::mips64el:
   case Triple::mips:
@@ -1277,6 +1290,8 @@ static unsigned getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
   case llvm::Triple::lanai:
   case llvm::Triple::le32:
   case llvm::Triple::mips:
+  case llvm::Triple::matrix:
+  case llvm::Triple::matrixel:
   case llvm::Triple::mipsel:
   case llvm::Triple::nvptx:
   case llvm::Triple::ppc:
@@ -1360,6 +1375,8 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::kalimba:
   case Triple::lanai:
   case Triple::le32:
+  case Triple::matrix:
+  case Triple::matrixel:
   case Triple::mips:
   case Triple::mipsel:
   case Triple::nvptx:

@@ -317,6 +317,7 @@ enum {
   EM_BPF = 247,           // Linux kernel bpf virtual machine
   EM_VE = 251,            // NEC SX-Aurora VE
   EM_CSKY = 252,          // C-SKY 32-bit processor
+  EM_MATRIX = 557,        // Matrix DSP processor
 };
 
 // Object file classes.
@@ -396,6 +397,14 @@ enum {
   // 2 for revised ABI without function descriptors,
   // 0 for unspecified or not using any features affected by the differences.
   EF_PPC64_ABI = 3
+};
+
+// Matrix Specific e_flags
+enum {
+  EF_MATRIX_NOREORDER = 0x00000001, // Don't reorder instructions
+  EF_MATRIX_PIC = 0x00000002, // Position independent code
+  EF_MATRIX_ARCH_32 = 0x50000000, // MATRIX32 instruction set per linux not elf.h
+  EF_MATRIX_ARCH = 0xf0000000 // Mask for applying EF_MATRIX_ARCH_ variant
 };
 
 // Special values for the st_other field in the symbol table entry for PPC64.
@@ -557,6 +566,11 @@ enum : unsigned {
 // ELF Relocation types for Mips
 enum {
 #include "ELFRelocs/Mips.def"
+};
+
+// ELF Relocation types for Matrix
+enum {
+#include "ELFRelocs/Matrix.def"
 };
 
 // Special values for the st_other field in the symbol table entry for MIPS.
