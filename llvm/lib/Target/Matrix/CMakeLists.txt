@@ -8,7 +8,9 @@ set(LLVM_TARGET_DEFINITIONS MatrixOther.td)
 #  came from MatrixInstrInfo.td.
 tablegen(LLVM MatrixGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM MatrixGenInstrInfo.inc -gen-instr-info)
-#tablegen(LLVM MatrixGenSubtargetInfo.inc -gen-subtarget)
+tablegen(LLVM MatrixGenDAGISel.inc -gen-dag-isel)
+tablegen(LLVM MatrixGenCallingConv.inc -gen-callingconv)
+tablegen(LLVM MatrixGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM MatrixGenMCPseudoLowering.inc -gen-pseudo-lowering)
 
 # MatrixCommonTableGen must be defined
@@ -16,6 +18,17 @@ add_public_tablegen_target(MatrixCommonTableGen)
 
 # MatrixCodeGen should match with LLVMBuild.txt MatrixCodeGen
 add_llvm_target(MatrixCodeGen
+  MatrixFrameLowering.cpp
+  MatrixInstrInfo.cpp
+  MatrixISelLowering.cpp
+  MatrixMachineFunction.cpp
+  MatrixRegisterInfo.cpp
+  MatrixSEFrameLowering.cpp
+  MatrixSEInstrInfo.cpp
+  MatrixSEISelLowering.cpp
+  MatrixSERegisterInfo.cpp
+  MatrixSubtarget.cpp
+  MatrixTargetObjectFile.cpp
   MatrixTargetMachine.cpp
 
   LINK_COMPONENTS

@@ -1,5 +1,6 @@
 # MCTargetDesc/CMakeLists.txt
 add_llvm_component_library(LLVMMatrixDesc
+  MatrixABIInfo.cpp
   MatrixMCTargetDesc.cpp
 
   LINK_COMPONENTS

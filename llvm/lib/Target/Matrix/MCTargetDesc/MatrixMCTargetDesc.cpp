@@ -31,7 +31,7 @@ using namespace llvm;
 #include "MatrixGenInstrInfo.inc"
 
 #define GET_SUBTARGETINFO_MC_DESC
-//#include "MatrixGenSubtargetInfo.inc"
+#include "MatrixGenSubtargetInfo.inc"
 
 #define GET_REGINFO_MC_DESC
 #include "MatrixGenRegisterInfo.inc"

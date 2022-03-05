@@ -38,7 +38,7 @@ extern Target TheMatrixelTarget;
 #include "MatrixGenInstrInfo.inc"
 
 #define GET_SUBTARGETINFO_ENUM
-//#include "MatrixGenSubtargetInfo.inc"
+#include "MatrixGenSubtargetInfo.inc"
 
 #endif
 
