@@ -14,6 +14,7 @@
 #include "MatrixTargetMachine.h"
 #include "Matrix.h"
 
+#include "MatrixSEISelDAGToDAG.h"
 #include "MatrixSubtarget.h"
 #include "MatrixTargetObjectFile.h"
 #include "llvm/IR/Attributes.h"
@@ -149,10 +150,18 @@ public:
   const MatrixSubtarget &getMatrixSubtarget() const {
     return *getMatrixTargetMachine().getSubtargetImpl();
   }
+  bool addInstSelector() override;
 };
 } // namespace
 
 TargetPassConfig *MatrixTargetMachine::createPassConfig(PassManagerBase &PM) {
   return new MatrixPassConfig(*this, PM);
+}
+
+// Install an instruction selector pass using
+// the ISelDag to gen Matrix code.
+bool MatrixPassConfig::addInstSelector() {
+  addPass(createMatrixSEISelDag(getMatrixTargetMachine(), getOptLevel()));
+  return false;
 }
 

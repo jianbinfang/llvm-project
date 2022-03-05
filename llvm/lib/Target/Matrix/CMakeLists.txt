@@ -35,6 +35,8 @@ add_llvm_target(MatrixCodeGen
   MatrixSERegisterInfo.cpp
   MatrixSubtarget.cpp
   MatrixTargetObjectFile.cpp
+  MatrixISelDAGToDAG.cpp
+  MatrixSEISelDAGToDAG.cpp
   MatrixTargetMachine.cpp
 
   LINK_COMPONENTS
