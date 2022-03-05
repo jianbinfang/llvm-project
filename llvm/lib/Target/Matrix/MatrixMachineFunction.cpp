@@ -9,6 +9,7 @@
 
 #include "MatrixMachineFunction.h"
 
+#include "MCTargetDesc/MatrixBaseInfo.h"
 #include "MatrixInstrInfo.h"
 #include "MatrixSubtarget.h"
 #include "llvm/IR/Function.h"

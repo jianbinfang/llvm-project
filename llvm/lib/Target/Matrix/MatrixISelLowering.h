@@ -17,6 +17,7 @@
 
 #include "MatrixConfig.h"
 
+#include "MCTargetDesc/MatrixBaseInfo.h"
 #include "MCTargetDesc/MatrixABIInfo.h"
 #include "Matrix.h"
 #include "llvm/CodeGen/CallingConvLower.h"

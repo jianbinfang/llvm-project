@@ -11,8 +11,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_LIB_TARGET_CPU0_MCTARGETDESC_CPU0MCTARGETDESC_H
-#define LLVM_LIB_TARGET_CPU0_MCTARGETDESC_CPU0MCTARGETDESC_H
+#ifndef LLVM_LIB_TARGET_MATRIX_MCTARGETDESC_MATRIXMCTARGETDESC_H
+#define LLVM_LIB_TARGET_MATRIX_MCTARGETDESC_MATRIXMCTARGETDESC_H
 
 #include "MatrixConfig.h"
 #include "llvm/Support/DataTypes.h"
@@ -20,8 +20,19 @@
 #include <memory>
 
 namespace llvm {
+class MCAsmBackend;
+class MCCodeEmitter;
+class MCContext;
+class MCInstrInfo;
+class MCObjectTargetWriter;
+class MCRegisterInfo;
+class MCSubtargetInfo;
+class MCTargetOptions;
+class StringRef;
 class Target;
 class Triple;
+class raw_ostream;
+class raw_pwrite_stream;
 
 extern Target TheMatrixTarget;
 extern Target TheMatrixelTarget;

@@ -8,6 +8,10 @@ set(LLVM_TARGET_DEFINITIONS MatrixOther.td)
 #  came from MatrixInstrInfo.td.
 tablegen(LLVM MatrixGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM MatrixGenInstrInfo.inc -gen-instr-info)
+tablegen(LLVM MatrixGenCodeEmitter.inc -gen-emitter)
+tablegen(LLVM MatrixGenMCCodeEmitter.inc -gen-emitter)
+
+tablegen(LLVM MatrixGenAsmWriter.inc -gen-asm-writer)
 tablegen(LLVM MatrixGenDAGISel.inc -gen-dag-isel)
 tablegen(LLVM MatrixGenCallingConv.inc -gen-callingconv)
 tablegen(LLVM MatrixGenSubtargetInfo.inc -gen-subtarget)
@@ -18,6 +22,8 @@ add_public_tablegen_target(MatrixCommonTableGen)
 
 # MatrixCodeGen should match with LLVMBuild.txt MatrixCodeGen
 add_llvm_target(MatrixCodeGen
+  MatrixAsmPrinter.cpp
+  MatrixMCInstLower.cpp
   MatrixFrameLowering.cpp
   MatrixInstrInfo.cpp
   MatrixISelLowering.cpp
@@ -39,6 +45,7 @@ add_llvm_target(MatrixCodeGen
   MC
   MatrixDesc
   MatrixInfo
+  MatrixAsmPrinter
   SelectionDAG
   Support
   Target
@@ -49,6 +56,7 @@ add_llvm_target(MatrixCodeGen
   )
 
 # Should match with "subdirectories =  MCTargetDesc TargetInfo" in LLVMBuild.txt
+add_subdirectory(InstPrinter)
 add_subdirectory(TargetInfo)
 add_subdirectory(MCTargetDesc)
 

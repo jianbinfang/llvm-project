@@ -13,6 +13,7 @@
 //===----------------------------------------------------------------------===//
 #include "MatrixISelLowering.h"
 
+#include "MCTargetDesc/MatrixBaseInfo.h"
 #include "MatrixMachineFunction.h"
 #include "MatrixTargetMachine.h"
 #include "MatrixTargetObjectFile.h"
@@ -59,6 +60,14 @@ const char *MatrixTargetLowering::getTargetNodeName(unsigned Opcode) const {
 MatrixTargetLowering::MatrixTargetLowering(const MatrixTargetMachine &TM,
                                        const MatrixSubtarget &STI)
     : TargetLowering(TM), Subtarget(STI), ABI(TM.getABI()) {
+
+  // Matrix Custom Operations
+
+  // Operations not directly supported by Matrix.
+
+//- Set .align 2
+// It will emit .align 2 later
+  setMinFunctionAlignment(Align(2));
 
 }
 
