@@ -71,6 +71,13 @@ class MatrixInst<dag outs, dag ins, string asmstr, list<dag> pattern,
   field bits<32> SoftFail = 0;
 }
 
+// Matrix Pseudo Instructions Format
+class MatrixPseudo<dag outs, dag ins, string asmstr, list<dag> pattern>:
+      MatrixInst<outs, ins, asmstr, pattern, IIPseudo, Pseudo> {
+  let isCodeGenOnly = 1;
+  let isPseudo = 1;
+}
+
 //===----------------------------------------------------------------------===//
 // Format A instruction class in Matrix : <|opcode|ra|rb|rc|cx|>
 //===----------------------------------------------------------------------===//

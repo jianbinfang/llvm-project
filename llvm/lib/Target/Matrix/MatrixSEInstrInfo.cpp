@@ -13,6 +13,7 @@
 
 #include "MatrixSEInstrInfo.h"
 
+#include "InstPrinter/MatrixInstPrinter.h"
 #include "MatrixMachineFunction.h"
 #include "MatrixTargetMachine.h"
 #include "llvm/ADT/STLExtras.h"
@@ -30,6 +31,29 @@ MatrixSEInstrInfo::MatrixSEInstrInfo(const MatrixSubtarget &STI)
 
 const MatrixRegisterInfo &MatrixSEInstrInfo::getRegisterInfo() const {
   return RI;
+}
+
+//@expandPostRAPseudo
+/// Expand Pseudo instructions into real backend instructions
+bool MatrixSEInstrInfo::expandPostRAPseudo(MachineInstr &MI) const {
+//@expandPostRAPseudo-body
+  MachineBasicBlock &MBB = *MI.getParent();
+
+  switch (MI.getDesc().getOpcode()) {
+  default:
+    return false;
+  case Matrix::RetLR:
+    expandRetLR(MBB, MI);
+    break;
+  }
+
+  MBB.erase(MI);
+  return true;
+}
+
+void MatrixSEInstrInfo::expandRetLR(MachineBasicBlock &MBB,
+                                MachineBasicBlock::iterator I) const {
+  BuildMI(MBB, I, I->getDebugLoc(), get(Matrix::RET)).addReg(Matrix::LR);
 }
 
 const MatrixInstrInfo *llvm::createMatrixSEInstrInfo(const MatrixSubtarget &STI) {
