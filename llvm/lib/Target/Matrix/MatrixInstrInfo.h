@@ -11,12 +11,13 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_LIB_TARGET_MATRIX0_MATRIX0INSTRINFO_H
-#define LLVM_LIB_TARGET_MATRIX0_MATRIX0INSTRINFO_H
+#ifndef LLVM_LIB_TARGET_MATRIX_MATRIXINSTRINFO_H
+#define LLVM_LIB_TARGET_MATRIX_MATRIXINSTRINFO_H
 
 #include "MatrixConfig.h"
 
 #include "Matrix.h"
+#include "MatrixAnalyzeImmediate.h"
 #include "MatrixRegisterInfo.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
 #include "llvm/CodeGen/TargetInstrInfo.h"
@@ -44,7 +45,43 @@ public:
   /// Return the number of bytes of code the specified instruction may be.
   unsigned GetInstSizeInBytes(const MachineInstr &MI) const;
 
+  void storeRegToStackSlot(MachineBasicBlock &MBB,
+                           MachineBasicBlock::iterator MBBI,
+                           Register SrcReg, bool isKill, int FrameIndex,
+                           const TargetRegisterClass *RC,
+                           const TargetRegisterInfo *TRI) const override {
+    storeRegToStack(MBB, MBBI, SrcReg, isKill, FrameIndex, RC, TRI, 0);
+  }
+
+  void loadRegFromStackSlot(MachineBasicBlock &MBB,
+                            MachineBasicBlock::iterator MBBI,
+                            Register DestReg, int FrameIndex,
+                            const TargetRegisterClass *RC,
+                            const TargetRegisterInfo *TRI) const override {
+    loadRegFromStack(MBB, MBBI, DestReg, FrameIndex, RC, TRI, 0);
+  }
+
+  virtual void storeRegToStack(MachineBasicBlock &MBB,
+                               MachineBasicBlock::iterator MI,
+                               Register SrcReg, bool isKill, int FrameIndex,
+                               const TargetRegisterClass *RC,
+                               const TargetRegisterInfo *TRI,
+                               int64_t Offset) const = 0;
+
+  virtual void loadRegFromStack(MachineBasicBlock &MBB,
+                                MachineBasicBlock::iterator MI,
+                                Register DestReg, int FrameIndex,
+                                const TargetRegisterClass *RC,
+                                const TargetRegisterInfo *TRI,
+                                int64_t Offset) const = 0;
+
+  virtual void adjustStackPtr(unsigned SP, int64_t Amount,
+                              MachineBasicBlock &MBB,
+                              MachineBasicBlock::iterator I) const = 0;
+
 protected:
+  MachineMemOperand *GetMemOperand(MachineBasicBlock &MBB, int FI,
+                                   MachineMemOperand::Flags Flags) const;
 };
 const MatrixInstrInfo *createMatrixSEInstrInfo(const MatrixSubtarget &STI);
 }

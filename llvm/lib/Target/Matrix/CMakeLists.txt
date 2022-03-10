@@ -22,6 +22,7 @@ add_public_tablegen_target(MatrixCommonTableGen)
 
 # MatrixCodeGen should match with LLVMBuild.txt MatrixCodeGen
 add_llvm_target(MatrixCodeGen
+  MatrixAnalyzeImmediate.cpp
   MatrixAsmPrinter.cpp
   MatrixMCInstLower.cpp
   MatrixFrameLowering.cpp
